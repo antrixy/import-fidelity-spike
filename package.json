@@ -9,7 +9,7 @@
     "study:json": "node run.mjs --json"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "dependencies": {
     "curl-to-postmanv2": "^1.8.7",
