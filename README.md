@@ -40,8 +40,14 @@ they copied — and the tool reports success either way.
 ## Oracle
 
 `curl` itself. Each fixture is executed against a local echo server and the
-arriving request line, headers, and body bytes are recorded. Adapters parse the
-same command string; a divergence is any difference from the wire capture.
+arriving request line, headers, and body are recorded. Adapters parse the same
+command string; a divergence is any difference from the wire capture.
+
+**The body is captured as a UTF-8 string, not as raw bytes** — `oracle.mjs`
+decodes the received buffer. Invalid UTF-8 would be replaced silently, so this
+harness cannot detect a byte-level divergence in a non-UTF-8 body. A known
+limitation of the spike, recorded rather than fixed: fixing it is study work,
+and this harness is frozen.
 
 The echo server is a bare Node `http` server sharing no parsing code with any
 adapter under test.
@@ -53,7 +59,7 @@ value. Fixtures now carry a `note` field that is documentation only.
 
 ## Running
 
-Requires Node 20+, `curl` on `PATH`, and port 8099 free.
+Requires Node 22+ (see `engines.node`), `curl` on `PATH`, and port 8099 free.
 
 ```
 npm install
