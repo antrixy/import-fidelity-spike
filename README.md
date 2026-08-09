@@ -23,7 +23,20 @@ for:
 - **No issues have been filed upstream, and none should be** until the above
   three are resolved.
 
-Everything here is reproducible: clone it, run it, disagree with it.
+Everything here is reproducible in the sense that matters for disagreement:
+clone it, run it, and check the reasoning against your own wire capture.
+
+**It is NOT dependency-reproducible, and the distinction is worth stating.**
+`package.json` declares caret ranges and `package-lock.json` is gitignored, so a
+later `npm install` can resolve different importer versions than the pilot
+measured — and a re-run producing different output would be indistinguishable
+from a harness change. The versions the 2026-08-07 measurements were taken
+against are recorded: `curl-to-postmanv2@1.8.7` and `curlconverter@4.12.0`, with
+curl 8.5.0. Those are a record of what was measured, not a constraint on what
+resolves. The pilot's full transitive dependency tree was never captured and
+cannot now be recovered, so a lockfile generated today would describe today
+rather than 2026-08-07 — which is why one is not being added here. Pinning
+belongs to the study, not to the record of the spike.
 
 **The harness is frozen at its 2026-08-07 state.** Its measurements are cited
 elsewhere as evidence for whether the full study is worth doing, so changing it
