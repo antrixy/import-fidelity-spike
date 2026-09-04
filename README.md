@@ -7,8 +7,16 @@ oracle.
 ## Status — read this first
 
 **This is a spike, not a finished study.** It exists to answer one question:
-*do real divergences exist?* They do — six of them, listed below. That is the
+*do real divergences exist?* They do. **Five confirmed, plus one candidate that
+is probably this harness's own normalisation** — see F15 below. That is the
 whole result so far.
+
+**Corrected 2026-09-04. This sentence read "six of them" until then.** The
+measurements have not changed and no fixture, adapter or recorded output has
+been touched. What changed is the interpretation: F15 was re-read as the same
+class of harness artifact as F12/F13, and continuing to publish "six confirmed"
+would be a current factual claim known to be overstated. Preserving a
+measurement and repeating a claim about it are different things.
 
 What has **not** been done, and what the findings below are therefore not ready
 for:
@@ -140,12 +148,25 @@ not byte-identical, and signature-based auth schemes care.
 Fragments are client-side only; curl never transmits them. Both adapters carry
 `#frag` into the request target.
 
-### F15 — Body re-serialised, changing bytes
+### F15 — Body re-serialised, changing bytes — **RECLASSIFIED: candidate, not confirmed**
 
 A body containing the literal characters `\u00e9` is transmitted verbatim by
 curl. `curlconverter` JSON-parses and re-serialises it, emitting decoded
 characters. Any importer that round-trips a body through a parser risks
 changing the bytes.
+
+**Reclassified 2026-09-04.** This is most likely **this harness's own
+serialisation**, not curlconverter's behaviour — the same failure mode as the
+F12/F13 body-shape artifact below, where the harness stringifies an
+intermediate object rather than comparing what the tool would actually send.
+The observation stands; the attribution does not. It is not a confirmed
+divergence and must not be filed upstream until an adapter compares
+curlconverter's **generator output** rather than its intermediate
+representation.
+
+The general rule below — *compare what the tool would send, not what its
+intermediate representation contains* — is exactly the check F15 has not
+passed.
 
 ## Known normalisation artifacts — NOT yet findings
 
